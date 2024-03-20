@@ -25,8 +25,8 @@ public class MemberRepository {
 
     public Member save(Member member){
         member.setId(++sequence);
-        member.setUsername("bae");
-        member.setAge(36);
+        //member.setUsername("bae");
+        //member.setAge(36);
         store.put(member.getId(), member);
 
         return member;
