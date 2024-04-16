@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.sql.rowset.serial.SerialException;
-
 import hello.servlet.web.frontcontroller.ModelView;
 import hello.servlet.web.frontcontroller.MyView;
 import hello.servlet.web.frontcontroller.v3.controller.MemberFormControllerV3;
@@ -41,22 +39,15 @@ public class FrontControllerServletV3 extends HttpServlet{
 
         Map<String, String> paramMap = createParamMap(reqeust);
         
-        try {
-            ModelView mv = controller.process(paramMap);
-            String viewName = mv.getViewName();
-            MyView view = viewResolver(viewName);
-            view.render(reqeust, response);
-        } catch (SerialException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+
+        ModelView mv = controller.process(paramMap);
+        String viewName = mv.getViewName();
+        MyView view = viewResolver(viewName);
+        view.render(mv.getModel(), reqeust, response);
     }
 
     private MyView viewResolver(String viewName) {
-        return new MyView("/WEB-INF/views/" + viewName + ".jsp")
+        return new MyView("/WEB-INF/views/" + viewName + ".jsp");
     }
 
     private Map<String, String> createParamMap(HttpServletRequest request){
